@@ -43,15 +43,17 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Tcpview.exe..."
 Copy-Item $sysmonPath $sysmonDir
 
 # Download Olaf Hartongs Sysmon config
-Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Olaf Hartong's Sysmon config..."
-(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml', "$sysmonConfigPath")
+# Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Olaf Hartong's Sysmon config..."
+# (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml', "$sysmonConfigPath")
 # Alternative: Download SwiftOnSecurity's Sysmon config
 # Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
 # (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml', "$sysmonConfigPath")
+# Use my fork of Cyb3rWard0g's initial baseline config - It doesn't have most of the excludes that the previous two do, which makes a lot more sense for our use case.
+(New-Object System.Net.WebClient).DownloadFile('https://gist.githubusercontent.com/poptart-sommelier/3c8d09b6e3e4e3b8f7d92026363035df/raw/2706255755936072a767d1108e6fa5f755406d15/StartLogging.xml', "$sysmonConfigPath")
 
 # Start Sysmon
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Starting Sysmon..."
-Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -i $sysmonConfigPath"
+Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -i $sysmonConfigPath -n -l"
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Verifying that the Sysmon service is running..."
 Start-Sleep 5 # Give the service time to start
 If ((Get-Service -name Sysmon64).Status -ne "Running")
