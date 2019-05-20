@@ -56,7 +56,8 @@ Param(
 )
 
 $DL_DIR = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-$LAB_HOSTS = ('logger', 'dc', 'win10')
+# $LAB_HOSTS = ('logger', 'dc', 'win10')
+$LAB_HOSTS = ('win10')
 
 function install_checker {
   param(
@@ -203,10 +204,10 @@ function preflight_checks {
     Write-Host '[preflight_checks] Checking for vagrant instances..'
     $CurrentDir = Get-Location
     Set-Location "$DL_DIR\Vagrant"
-    if (($(vagrant status) | Select-String -Pattern "not[ _]created").Count -ne 4) {
-      Write-Error 'You appear to have already created at least one Vagrant instance. This script does not support already created instances. Please either destroy the existing instances or follow the build steps in the README to continue.'
-      break
-    }
+    #if (($(vagrant status) | Select-String -Pattern "not[ _]created").Count -ne 4) {
+    #  Write-Error 'You appear to have already created at least one Vagrant instance. This script does not support already created instances. Please either destroy the existing instances or follow the build steps in the README to continue.'
+    #  break
+    #}
     Set-Location $CurrentDir
 
     # Check available disk space. Recommend 80GB free, warn if less
@@ -344,31 +345,6 @@ function download {
   }
 }
 
-function post_build_checks {
-
-  Write-Host '[post_build_checks] Running Splunk Check.'
-  $SPLUNK_CHECK = download -URL 'https://192.168.38.105:8000/en-US/account/login?return_to=%2Fen-US%2F' -PatternToMatch 'This browser is not supported by Splunk'
-  Write-Host "[post_build_checks] Splunk Result: $SPLUNK_CHECK"
-
-  Write-Host '[post_build_checks] Running Fleet Check.'
-  $FLEET_CHECK = download -URL 'https://192.168.38.105:8412' -PatternToMatch 'Kolide Fleet'
-  Write-Host "[post_build_checks] Fleet Result: $FLEET_CHECK"
-
-  Write-Host '[post_build_checks] Running MS ATA Check.'
-  $ATA_CHECK = download -URL 'https://192.168.38.103' -SuccessOn401
-  Write-Host "[post_build_checks] ATA Result: $ATA_CHECK"
-
-  if ($SPLUNK_CHECK -eq $false) {
-    Write-Warning 'Splunk failed post-build tests and may not be functioning correctly.'
-  }
-  if ($FLEET_CHECK -eq $false) {
-    Write-Warning 'Fleet failed post-build tests and may not be functioning correctly.'
-  }
-  if ($ATA_CHECK -eq $false) {
-    Write-Warning 'MS ATA failed post-build tests and may not be functioning correctly.'
-  }
-}
-
 # If no ProviderName was provided, get a provider
 if ($ProviderName -eq $Null -or $ProviderName -eq "") {
   $ProviderName = list_providers
@@ -415,7 +391,5 @@ if (!($PackerOnly)) {
     Write-Host "[main] Finished for: $VAGRANT_HOST"
   }
 
-  Write-Host "[main] Running post_build_checks"
-  post_build_checks
-  Write-Host "[main] Finished post_build_checks"
+  Write-Host "[main] Finished!"
 }

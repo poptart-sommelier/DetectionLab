@@ -13,11 +13,11 @@ apt_install_prerequisites() {
   apt-get -qq update
   apt-get -qq install -y apt-fast
   echo "[$(date +%H:%M:%S)]: Running apt-fast install..."
-  apt-fast -qq install -y jq whois build-essential git docker docker-compose unzip
+  apt-fast -qq install -y jq whois build-essential git unzip
 }
 
 test_prerequisites() {
-  for package in jq whois build-essential git docker docker-compose unzip
+  for package in jq whois build-essential git unzip
   do
     echo "[$(date +%H:%M:%S)]: [TEST] Validating that $package is correctly installed..."
     # Loop through each package using dpkg
@@ -67,14 +67,14 @@ install_helk() {
   git clone https://github.com/Cyb3rWard0g/HELK.git
   cd HELK/docker
   echo "[$(date +%H:%M:%S)]: Installing HELK"
-  ./helk_install.sh -p kib@n@1! -i 192.168.38.200 -b 'helk-kibana-notebook-analysis' -l 'basic' -e elasticsearch -q
+  ./helk_install.sh -p kib@n@1! -i 192.168.38.105 -b 'helk-kibana-notebook-analysis' -l 'basic' -e elasticsearch
 }
 
 main() {
   apt_install_prerequisites
   test_prerequisites
   fix_eth1_static_ip
-  install_help
+  install_helk
   postinstall_tasks
 }
 

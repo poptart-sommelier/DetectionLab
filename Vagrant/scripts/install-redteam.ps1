@@ -2,7 +2,9 @@
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Red Team Tooling..."
 
-# Windows Defender should be disabled already by O&O ShutUp10
+# Disable Windows Defender
+Set-MpPreference -DisableRealtimeMonitoring $true
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1 -PropertyType DWORD -Force
 
 # Purpose: Downloads and unzips a copy of the latest Mimikatz trunk
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Determining latest release of Mimikatz..."

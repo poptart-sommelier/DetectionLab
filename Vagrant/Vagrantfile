@@ -40,21 +40,21 @@ Vagrant.configure("2") do |config|
     cfg.vm.provision "shell", path: "scripts/provision.ps1", privileged: false
     cfg.vm.provision "reload"
     cfg.vm.provision "shell", path: "scripts/provision.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/download_palantir_wef.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/download_palantir_osquery.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-splunkuf.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-inputsconf.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/download_palantir_wef.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/download_palantir_osquery.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-splunkuf.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-inputsconf.s1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-utilities.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-redteam.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-choco-extras.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-osquery.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-osquery.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-sysinternals.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/configure-ou.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/configure-wef-gpo.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/configure-wef-gpo.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/configure-powershelllogging.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/configure-AuditingPolicyGPOs.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/configure-rdp-user-gpo.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-autorunstowineventlog.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-autorunstowineventlog.ps1", privileged: false
     cfg.vm.provision "shell", inline: 'wevtutil el | Select-String -notmatch "Microsoft-Windows-LiveId" | Foreach-Object {wevtutil cl "$_"}', privileged: false
     cfg.vm.provision "shell", inline: "Set-SmbServerConfiguration -AuditSmb1Access $true -Force", privileged: false
 
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
       vb.gui = true
       vb.name = "dc.windomain.local"
       vb.default_nic_type = "82545EM"
-      vb.customize ["modifyvm", :id, "--memory", 3072]
+      vb.customize ["modifyvm", :id, "--memory", 4096]
       vb.customize ["modifyvm", :id, "--cpus", 2]
       vb.customize ["modifyvm", :id, "--vram", "32"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
@@ -89,28 +89,28 @@ Vagrant.configure("2") do |config|
     cfg.vm.network :private_network, ip: "192.168.38.104", gateway: "192.168.38.1", dns: "192.168.38.102"
 
     cfg.vm.provision "shell", path: "scripts/fix-second-network.ps1", privileged: false, args: "-ip 192.168.38.104 -dns 192.168.38.102"
-    cfg.vm.provision "shell", path: "scripts/MakeWindows10GreatAgain.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/MakeWindows10GreatAgain.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/provision.ps1", privileged: false
     cfg.vm.provision "reload"
     cfg.vm.provision "shell", path: "scripts/provision.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/download_palantir_wef.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/download_palantir_osquery.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/download_palantir_wef.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/download_palantir_osquery.ps1", privileged: false
     cfg.vm.provision "shell", inline: 'wevtutil el | Select-String -notmatch "Microsoft-Windows-LiveId" | Foreach-Object {wevtutil cl "$_"}', privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-splunkuf.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-splunkuf.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-utilities.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-redteam.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-choco-extras.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-osquery.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-inputsconf.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-osquery.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-inputsconf.ps1", privileged: false
     cfg.vm.provision "shell", path: "scripts/install-sysinternals.ps1", privileged: false
-    cfg.vm.provision "shell", path: "scripts/install-autorunstowineventlog.ps1", privileged: false
+    #cfg.vm.provision "shell", path: "scripts/install-autorunstowineventlog.ps1", privileged: false
 
     cfg.vm.provider "vmware_desktop" do |v, override|
       v.vmx["displayname"] = "win10.windomain.local"
       v.vmx["gui.fullscreenatpoweron"] = "FALSE"
       v.vmx["gui.viewModeAtPowerOn"] = "windowed"
-      v.memory = 2048
-      v.cpus = 1
+      v.memory = 4096
+      v.cpus = 2
       v.gui = true
       v.enable_vmrun_ip_lookup = false
     end
@@ -119,8 +119,8 @@ Vagrant.configure("2") do |config|
       vb.gui = true
       vb.name = "win10.windomain.local"
       vb.default_nic_type = "82545EM"
-      vb.customize ["modifyvm", :id, "--memory", 2048]
-      vb.customize ["modifyvm", :id, "--cpus", 1]
+      vb.customize ["modifyvm", :id, "--memory", 4096]
+      vb.customize ["modifyvm", :id, "--cpus", 2]
       vb.customize ["modifyvm", :id, "--vram", "32"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
