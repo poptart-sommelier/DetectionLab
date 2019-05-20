@@ -75,7 +75,6 @@ main() {
   test_prerequisites
   fix_eth1_static_ip
   install_helk
-  postinstall_tasks
 }
 
 main
