@@ -49,7 +49,7 @@ Copy-Item $sysmonPath $sysmonDir
 # Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
 # (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml', "$sysmonConfigPath")
 # Use my fork of Cyb3rWard0g's initial baseline config - It doesn't have most of the excludes that the previous two do, which makes a lot more sense for our use case.
-(New-Object System.Net.WebClient).DownloadFile('https://gist.githubusercontent.com/poptart-sommelier/3c8d09b6e3e4e3b8f7d92026363035df/raw/2706255755936072a767d1108e6fa5f755406d15/StartLogging.xml', "$sysmonConfigPath")
+(New-Object System.Net.WebClient).DownloadFile('https://gist.githubusercontent.com/poptart-sommelier/3c8d09b6e3e4e3b8f7d92026363035df/raw/56e5b61a22ff52e0cde91008f4fb5550da39201e/StartLogging.xml', "$sysmonConfigPath")
 
 # Start Sysmon
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Starting Sysmon..."
