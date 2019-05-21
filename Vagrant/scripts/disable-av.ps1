@@ -1,3 +1,5 @@
+# Get hostname
+$hostname = $(hostname)
 
 If ($hostname -eq "win10") {
   # Disable Windows Defender for Win10
@@ -9,4 +11,3 @@ If ($hostname -eq "dc") {
   # Disable Windows Defender for Server 2016
   Uninstall-WindowsFeature -Name Windows-Defender
 }
-
