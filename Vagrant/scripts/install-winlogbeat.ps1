@@ -17,8 +17,11 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing winlogbeat..."
 # apparently HELK has problems with 7.X versions of winlogbeat, forcing 6.7.1 for now.
 # see: https://github.com/Cyb3rWard0g/HELK/blob/master/winlogbeat/winlogbeat.yml
 # Use commented one when the issue is resolved.
-# choco install -y --limit-output --no-progress winlogbeat
-choco install -y --limit-output --no-progress winlogbeat --version 6.7.1
+# choco install -y --limit-output --no-progress winlogbeat --version 6.7.1
+
+# The above issue seems to be resolved, and now allows 6, 7 or 8
+choco install -y --limit-output --no-progress winlogbeat
+
 
 # Set TLSv1.2 to fetch config
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12

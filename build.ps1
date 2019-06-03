@@ -56,9 +56,9 @@ Param(
 )
 
 $DL_DIR = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-# $LAB_HOSTS = ('logger', 'dc', 'win10')
+$LAB_HOSTS = ('logger', 'dc', 'win10')
 # $LAB_HOSTS = ('dc', 'win10')
-$LAB_HOSTS = ('logger')
+# $LAB_HOSTS = ('logger')
 
 function install_checker {
   param(
