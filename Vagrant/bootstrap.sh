@@ -73,7 +73,7 @@ install_helk() {
 main() {
   apt_install_prerequisites
   test_prerequisites
-  fix_eth1_static_ip
+  # fix_eth1_static_ip
   install_helk
 }
 
