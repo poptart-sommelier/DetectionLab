@@ -27,7 +27,7 @@ choco install -y --limit-output --no-progress winlogbeat
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading HELK winlogbeat.yml, and modifying it for our config"
 # (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/Cyb3rWard0g/HELK/master/winlogbeat/winlogbeat.yml', $winlogbeatconfigPath)
-$winlogbeatYml = (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Cyb3rWard0g/HELK/master/winlogbeat/winlogbeat.yml')
+$winlogbeatYml = (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Cyb3rWard0g/HELK/master/configs/winlogbeat/winlogbeat.yml')
 # We only have one HELK Kafka instance, so remove the extra one
 $winlogbeatYml = $winlogbeatYml -replace ',\"<HELK-IP>:9093\"',''
 # Make sure we've set it to our actual IP
